@@ -1,0 +1,68 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 350,
+    "title": "global unemployment rate",
+    "data": {
+        "url": "./data/global_unemployment_rate.csv"
+    },
+    "layer": [
+        {
+            "encoding": {
+                "y": {
+                    "type": "quantitative",
+                    "field": "Rate",
+                    "aggregate": "mean",
+                    "scale": {
+                        "domain": [4.5,7]
+                    }
+                }
+            },
+            "mark": {
+                "type": "rule",
+                "color": "orange"
+            }
+        },
+        {
+            "encoding": {
+                "y": {
+                    "type": "quantitative",
+                    "field": "Rate",
+                    "aggregate": "q3"
+                }
+            },
+            "mark": {
+                "type": "rule",
+                "color": "red"
+            }
+        },
+        {
+            "mark": {
+                "type": "line",
+                "point": true
+            },
+            "encoding": {
+                "y": {
+                    "field": "Rate",
+                    "type": "quantitative",
+                    "title": "Rate(%)"
+                },
+                "x": {
+                    "field": "Year",
+                    "type": "nominal"
+                },
+                "tooltip": [
+                    {
+                        "field": "Year",
+                        "type": "nominal",
+                        "title": "Year"
+                    },
+                    {
+                        "field": "Rate",
+                        "type": "quantitative",
+                        "title": "Rate"
+                    }
+                ]
+            }
+        }
+    ]
+}

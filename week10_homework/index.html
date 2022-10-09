@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.20.8"></script>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./css/bulma.min.css" />
+  <style>
+    .center-content {
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="columns">
+      <div class="column is-10 is-offset-1">
+        <!-- Unemployment 世界地图 -->
+        <section class="section">
+          <h1 class="title">Global unemployment</h1>
+          <div class="center-content">
+            <div id="vis"></div>
+          </div>
+          <div class="columns">
+            <div class="column center-content">
+              <div id="vis_global_un_rate_trend" />
+            </div>
+            <div class="column">
+              <p>2020 and 2021 are tough years due to the pandemic, the unemployment rate increased a lot.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="subtitle">Sources</h2>
+          <p>
+            https://www.statista.com/statistics/279777/global-unemployment-rate/
+            <br />
+            https://data.oecd.org/emp/employment-rate-by-age-group.htm#indicator-chart
+            <br />
+            https://www.kaggle.com/datasets/pantanjali/unemployment-dataset
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>FIT3179 Assignment 2</strong> by <a href="https://rankki.xyz">Hui(Hugh) Liu</a>.
+      </p>
+      <p>
+        The source code
+        is
+        licensed
+        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+        is licensed <a href="https://creativecommons.org/share-your-work/public-domain/cc0/">CC0</a>.
+      </p>
+      <p>
+        All Data used in this project have been listed. <strong>No Right Reversed</strong>.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    $(document).ready(() => {
+      $.getJSON("./config/unemployment.json")
+        .then(spec => {
+          vegaEmbed("#vis", spec, { mode: "vega-lite" }).then(console.log).catch(console.error);
+        })
+      $.getJSON("./config/global_unemployment_rate.json")
+        .then(spec => {
+          vegaEmbed("#vis_global_un_rate_trend", spec, { mode: "vega-lite" }).then(console.log).catch(console.error);
+        })
+    })
+  </script>
+</body>
+
+</html>
