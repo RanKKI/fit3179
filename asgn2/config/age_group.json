@@ -1,0 +1,103 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "./data/employment_by_age_2021.csv"
+  },
+  "title": "Age group & countries in 2021",
+  "encoding": {
+    "x": {
+      "field": "LOCATION",
+      "type": "nominal",
+      "title": "Location"
+    },
+    "y": {
+      "field": "Value",
+      "type": "quantitative",
+      "aggregate": "sum",
+      "title": "Employment rate"
+    },
+    "yOffset": {
+      "field": "SUBJECT"
+    },
+    "color": {
+      "field": "SUBJECT"
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "orient": "horizontal",
+        "opacity": "0.1"
+      },
+      "encoding": {
+        "color": {
+          "legend": {
+            "symbolOpacity": "1"
+          },
+          "field": "SUBJECT"
+        }
+      },
+      "selection": {
+        "series": {
+          "type": "multi",
+          "encodings": [
+            "color"
+          ],
+          "on": "click",
+          "bind": "legend"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "bar",
+        "orient": "horizontal"
+      },
+      "transform": [
+        {
+          "lookup": "LOCATION",
+          "from": {
+            "data": {
+              "url": "./data/ne_110m_admin_0_countries.topojson",
+              "format": {
+                "type": "topojson",
+                "feature": "ne_110m_admin_0_countries"
+              }
+            },
+            "key": "properties.ISO_A3_EH"
+          },
+          "as": "geo"
+        },
+        {
+          "filter": {
+            "param": "series"
+          }
+        },
+        {
+          "calculate": "replace(datum.SUBJECT, '_', '-')",
+          "as": "group_title"
+        }
+      ],
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "geo.properties.NAME",
+            "title": "Name",
+            "type": "nominal"
+          },
+          {
+            "field": "group_title",
+            "title": "Group",
+            "type": "nominal"
+          },
+          {
+            "field": "Value",
+            "title": "Rate",
+            "type": "quantitative"
+          }
+        ]
+      }
+    }
+  ]
+}

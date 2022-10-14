@@ -1,0 +1,161 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "./data/employment_by_edu.2.csv"
+  },
+  "transform": [
+    {
+      "calculate": "{'UPPSRY_NTRY': 'Secondary', 'TRY': 'Higher Education', 'BUPPSRY': 'Below Secondary'}[datum.Edu]",
+      "as": "Edu"
+    }
+  ],
+  "vconcat": [
+    {
+      "width": 800,
+      "title": "Mean Rate",
+      "mark": {
+        "type": "line",
+        "point": true
+      },
+      "encoding": {
+        "y": {
+          "field": "Mean",
+          "type": "quantitative",
+          "title": "Rate(%)",
+          "scale": {
+            "domain": [
+              30,
+              100
+            ]
+          }
+        },
+        "x": {
+          "field": "Year",
+          "type": "temporal",
+          "scale": {
+            "domain": {
+              "param": "brush"
+            }
+          },
+          "axis": {
+            "title": "",
+            "tickCount": 10
+          }
+        },
+        "color": {
+          "field": "Edu",
+          "type": "nominal"
+        },
+        "tooltip": [
+          {
+            "field": "Mean",
+            "type": "quantitative",
+            "title": "Rate"
+          },
+          {
+            "field": "Year",
+            "type": "temporal",
+            "title": "Year",
+            "timeUnit": "year"
+          },
+          {
+            "field": "Edu",
+            "type": "nominal",
+            "title": "Education Group"
+          }
+        ]
+      }
+    },
+    {
+      "width": 800,
+      "title": "Median Rate",
+      "mark": {
+        "type": "line",
+        "point": true
+      },
+      "encoding": {
+        "y": {
+          "field": "Median",
+          "type": "quantitative",
+          "title": "Rate(%)",
+          "scale": {
+            "domain": [
+              30,
+              100
+            ]
+          }
+        },
+        "x": {
+          "axis": {
+            "title": "",
+            "tickCount": 10
+          },
+          "field": "Year",
+          "type": "temporal",
+          "scale": {
+            "domain": {
+              "param": "brush"
+            }
+          }
+        },
+        "color": {
+          "field": "Edu",
+          "type": "nominal"
+        },
+        "tooltip": [
+          {
+            "field": "Median",
+            "type": "quantitative",
+            "title": "Rate"
+          },
+          {
+            "field": "Year",
+            "type": "temporal",
+            "title": "Year",
+            "timeUnit": "year"
+          },
+          {
+            "field": "Edu",
+            "type": "nominal",
+            "title": "Education Group"
+          }
+        ]
+      }
+    },
+    {
+      "width": 800,
+      "height": 60,
+      "mark": "line",
+      "params": [
+        {
+          "name": "brush",
+          "select": {
+            "type": "interval",
+            "encodings": [
+              "x"
+            ]
+          }
+        }
+      ],
+      "encoding": {
+        "color": {
+          "field": "Edu",
+          "type": "nominal"
+        },
+        "x": {
+          "field": "Year",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "Median",
+          "type": "quantitative",
+          "axis": {
+            "tickCount": 3,
+            "grid": false,
+            "title": ""
+          }
+        }
+      }
+    }
+  ]
+}

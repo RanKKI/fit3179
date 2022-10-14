@@ -1,0 +1,71 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 500,
+    "title": "Between 1991-2021",
+    "data": {
+        "url": "./data/global_unemployment_rate.csv"
+    },
+    "layer": [
+        {
+            "mark": {
+                "type": "line",
+                "point": true
+            },
+            "encoding": {
+                "y": {
+                    "field": "Rate",
+                    "type": "quantitative",
+                    "title": "Rate(%)",
+                    "scale": {
+                        "domain": [
+                            4,
+                            7
+                        ]
+                    }
+                },
+                "x": {
+                    "field": "Year",
+                    "type": "nominal"
+                },
+                "tooltip": [
+                    {
+                      "field": "Rate",
+                      "type": "quantitative",
+                      "title": "Rate"
+                    },
+                    {
+                      "field": "Year",
+                      "type": "nominal",
+                      "title": "Year"
+                    }
+                  ]
+            }
+        },
+        {
+            "encoding": {
+                "y": {
+                    "type": "quantitative",
+                    "field": "Rate",
+                    "aggregate": "mean"
+                }
+            },
+            "mark": {
+                "type": "rule",
+                "color": "orange"
+            }
+        },
+        {
+            "encoding": {
+                "y": {
+                    "type": "quantitative",
+                    "field": "Rate",
+                    "aggregate": "q3"
+                }
+            },
+            "mark": {
+                "type": "rule",
+                "color": "red"
+            }
+        }
+    ]
+}
