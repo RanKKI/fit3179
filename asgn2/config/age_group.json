@@ -1,20 +1,40 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "data": {
-    "url": "./data/employment_by_age_2021.csv"
+    "url": "./data/employment_by_age_2021.2.csv"
   },
-  "title": "Age group & countries in 2021",
+  "width": 900,
+  "params": [
+    {
+      "name": "Year_selection",
+      "value": 2021,
+      "bind": {
+        "input": "range",
+        "min": 2008,
+        "max": 2021,
+        "step": 1,
+        "name": "Year:  "
+      }
+    }
+  ],
   "encoding": {
     "x": {
       "field": "LOCATION",
       "type": "nominal",
-      "title": "Location"
+      "title": "Location",
+      "axis": {
+        "labelAngle": -30
+      },
+      "sort": "-y"
     },
     "y": {
       "field": "Value",
       "type": "quantitative",
       "aggregate": "sum",
-      "title": "Employment rate"
+      "title": "Employment rate",
+      "scale": {
+        "domain": [0, 250]
+      }
     },
     "yOffset": {
       "field": "SUBJECT"
@@ -25,6 +45,11 @@
   },
   "layer": [
     {
+      "transform": [
+        {
+          "filter": "datum.Year == Year_selection"
+        }
+      ],
       "mark": {
         "type": "bar",
         "orient": "horizontal",
@@ -70,6 +95,9 @@
           "as": "geo"
         },
         {
+          "filter": "datum.Year == Year_selection"
+        },
+        {
           "filter": {
             "param": "series"
           }
@@ -94,7 +122,8 @@
           {
             "field": "Value",
             "title": "Rate",
-            "type": "quantitative"
+            "type": "quantitative",
+            "format": ".2f"
           }
         ]
       }

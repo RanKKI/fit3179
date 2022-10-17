@@ -50,7 +50,8 @@
           {
             "field": "Mean",
             "type": "quantitative",
-            "title": "Rate"
+            "title": "Rate",
+            "format":".2f"
           },
           {
             "field": "Year",
@@ -106,7 +107,8 @@
           {
             "field": "Median",
             "type": "quantitative",
-            "title": "Rate"
+            "title": "Rate",
+            "format":".2f"
           },
           {
             "field": "Year",

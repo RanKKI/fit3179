@@ -3,22 +3,36 @@ import csv
 
 
 def main():
-    with open("./employment_by_edu.csv", "r") as f:
+    with open("./employment_by_age_2021.2.csv", "r") as f:
         reader = csv.reader(f)
         next(reader)
         data = list(reader)
+    k = defaultdict(lambda: [])
+    kk = defaultdict(lambda: defaultdict(lambda: []))
+    r = (2007, 2021)
 
-    m = defaultdict(lambda: defaultdict(lambda: []))
-    for item in data:
-        m[item[1]][item[2]].append(float(item[3]))
+    for row in filter(lambda x: x, data):
+        name, group, year, val = row
+        if not year:
+            continue
+        k[name].append(int(year))
+        kk[name][int(year)].append(row)
 
+    filtered_k = {}
+    for name, years in k.items():
+        if r[0] not in years or r[1] not in years:
+            continue
+        filtered_k[name] = years
 
-    with open("./employment_by_edu.2.csv", "w") as f:
+    print(len(k))
+    print(len(filtered_k))
+
+    with open("./out.csv", "w") as f:
         writer = csv.writer(f)
-        writer.writerow(["Edu", "Year", "Mean", "Median"])
-        for edu, year_group in m.items():
-            for year, val in year_group.items():
-                writer.writerow([edu, year, sum(val) / len(val), val[len(val)//2]])
+        for name, years in filtered_k.items():
+            for year in range(*r):
+                writer.writerow([name, ])
+
 
 
 if __name__ == "__main__":
